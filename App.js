@@ -4,11 +4,11 @@ import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'rea
 export default function App() {
 
   const [loading, setLoading] = useState(true)
-  const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=83139";
+  const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=85041";
   const [arrival, setArrival] = useState("")
 
 
-  const loadBusStopData = () => {
+  function loadBusStopData() {
 
    // setLoading(true);
 
@@ -20,7 +20,7 @@ export default function App() {
       console.log("Original Data:");
       
       const myBus = responseData.services.filter(
-        (item) => item.no === "155"
+        (item) => item.no === "10"
       )[0];
 
       console.log("My Bus:");
@@ -30,7 +30,7 @@ export default function App() {
     })
   };
 
- /* useEffect(() => {
+/*  useEffect(() => {
     const interval = setInterval(loadBusStopData, 10000);
     return () => clearInterval(interval);
   }, []); */
@@ -81,6 +81,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'red',
     padding: 20
-
   }
 });
