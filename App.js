@@ -1,11 +1,15 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default function App() {
+
+  const [loading, setLoading] = useState(true)
+
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Bus Arrival Time:`</Text>
-      <Text style={styles.timeText}>Loading...</Text>
+      <Text style={styles.headerText}>Bus Arrival Time:</Text>
+      <Text style={styles.timeText}>
+        {loading ? <ActivityIndicator size="large"/> : "Loaded"}</Text>
       <TouchableOpacity style={styles.button}>
         <Text styles={styles.buttonText}>Refresh</Text>
       </TouchableOpacity>      
@@ -34,12 +38,13 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 20,
     borderRadius: 6,
-    backgroundColor: '#006400',
+    backgroundColor: 'blue',
+    paddingVertical: 10,
     paddingHorizontal: 20
   },
   buttonText: {
     fontSize: 20,
-    color: 'blue',
+    color: 'white',
     padding: 20
 
   }
