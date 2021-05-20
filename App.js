@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default function App() {
@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 20,
     fontWeight: 'bold',
-    color: '333333'
+    color: '#333333'
   },
   timeText: {
     marginBottom: 20,
     fontSize: 48,
-    color: '#333333',
+    color: '#333333'
   },
   button: {
     marginBottom: 20,
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    color: 'blue'
+    color: 'blue',
+    padding: 20
 
   }
 });
