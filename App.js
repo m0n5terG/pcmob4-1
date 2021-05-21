@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import moment from 'moment';
 
 export default function App() {
-
   const [loading, setLoading] = useState(true)
   const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=85041";
   const [arrival, setArrival] = useState("")
@@ -31,7 +31,6 @@ export default function App() {
       setLoading(false)
     })
   };
-  //let timeDiff = moment()
 
   useEffect(() => {
     const interval = setInterval(loadBusStopData, 10000);
