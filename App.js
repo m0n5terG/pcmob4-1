@@ -6,11 +6,12 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=85041";
   const [arrival, setArrival] = useState("")
+  const [arrivalNext, setArrivalNext] = useState("")
 
 
   function loadBusStopData() {
 
-   // setLoading(true);
+    setLoading(true);
 
     fetch(BUSSTOP_URL)
     .then((response) => {
@@ -26,14 +27,16 @@ export default function App() {
       console.log("My Bus:");
       console.log(myBus);
       setArrival(myBus.next.time)
+      setArrivalNext(myBus.next2.time)
       setLoading(false)
     })
   };
+  //let timeDiff = moment()
 
-/*  useEffect(() => {
-    const interval = setInterval(loadBusStopData, 10000);
+  useEffect(() => {
+    const interval = setInterval(loadBusStopData, 60000);
     return () => clearInterval(interval);
-  }, []); */
+  }, []);
 
   useEffect(() => {
     loadBusStopData();
@@ -44,6 +47,8 @@ export default function App() {
       <Text style={styles.headerText}>Bus Arrival Time:</Text>
       <Text style={styles.timeText}>
         {loading ? <ActivityIndicator size="large"/> : arrival}</Text>
+        <Text style={styles.timeText}>
+        {loading ? <ActivityIndicator size="large"/> : arrivalNext}</Text>
       <TouchableOpacity style={styles.button}>
         <Text styles={styles.buttonText}>Refresh</Text>
       </TouchableOpacity>      
