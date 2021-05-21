@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import moment from 'moment';
+import moment from 'moment'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
@@ -23,6 +23,18 @@ export default function App() {
       const myBus = responseData.services.filter(
         (item) => item.no === "10"
       )[0];
+
+      if (myBus.next.time != []) {
+        let localTime = new Date(myBus.next.time).toLocaleTimeString(
+          "en-US"
+        );
+        setArrival(localTime);
+
+        /*let timeDiff = moment(myBus.next).diff(moment(), 'minutes');
+        if (isNaN(timeDiff)) {
+          timeDiff = 0;
+        }*/
+      }
 
       console.log("My Bus:");
       console.log(myBus);
