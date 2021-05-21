@@ -34,7 +34,7 @@ export default function App() {
   //let timeDiff = moment()
 
   useEffect(() => {
-    const interval = setInterval(loadBusStopData, 60000);
+    const interval = setInterval(loadBusStopData, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -47,6 +47,7 @@ export default function App() {
       <Text style={styles.headerText}>Bus Arrival Time:</Text>
       <Text style={styles.timeText}>
         {loading ? <ActivityIndicator size="large"/> : arrival}</Text>
+        <Text style={styles.headerText}>Next Bus Arrival Time:</Text>
         <Text style={styles.timeText}>
         {loading ? <ActivityIndicator size="large"/> : arrivalNext}</Text>
       <TouchableOpacity style={styles.button}>
@@ -78,13 +79,13 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 20,
     borderRadius: 6,
-    backgroundColor: 'blue',
+    backgroundColor: '#f4f421',
     paddingVertical: 10,
     paddingHorizontal: 20
   },
   buttonText: {
     fontSize: 20,
-    color: 'red',
+    color: '#fffafa',
     padding: 20
   }
 });
