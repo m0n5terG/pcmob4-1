@@ -1,52 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
 export default function App() {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=85041";
-  const [arrival, setArrival] = useState("")
-  const [arrivalNext, setArrivalNext] = useState("")
-  const [duration, setDuration] = useState("")
-
+  const [arrival, setArrival] = useState("");
+  const [arrivalNext, setArrivalNext] = useState("");
+  const [duration, setDuration] = useState("");
 
   function loadBusStopData() {
-
     setLoading(true);
 
     fetch(BUSSTOP_URL)
-    .then((response) => {
-      return response.json();
-    })
-    .then((responseData) => {
-      console.log("Original Data:");
-      
-      const myBus = responseData.services.filter(
-        (item) => item.no === "10"
-      )[0];
-      console.log(myBus);
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log("Original Data:");
 
-      let localTime = new Date(myBus.next.time).toLocaleTimeString(
-          "en-US"
-        );
-        setArrival(localTime)
+        const myBus = responseData.services.filter(
+          (item) => item.no === "10"
+        )[0];
+        console.log(myBus);
+
+        let localTime = new Date(myBus.next.time).toLocaleTimeString("en-US");
+        setArrival(localTime);
 
         const diffTime = Math.floor(myBus.next["duration_ms"] / 1000);
         const mins = Math.floor(diffTime / 60);
         const secs = diffTime % 60;
-        
+
         if (diffTime < 0) {
           setDuration(`Bus has arrived`);
         } else {
           setDuration(`In ${mins} mins : ${secs} secs`);
         }
-      
-      let localTime2 = new Date(myBus.subsequent.time).toLocaleTimeString(
+
+        let localTime2 = new Date(myBus.subsequent.time).toLocaleTimeString(
           "en-US"
         );
-        setArrivalNext(localTime2)
+        setArrivalNext(localTime2);
 
-      setLoading(false)
-    });
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
@@ -61,15 +63,18 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.headerText}>Bus Arrival Time:</Text>
       <Text style={styles.timeText}>
-        {loading ? <ActivityIndicator size="large"/> : arrival}</Text>
-        <Text style={styles.timeText2}>
-        {loading ? <ActivityIndicator size="large"/> : duration}</Text> 
-        <Text style={styles.headerText}>Next Bus Arrival Time:</Text>
-        <Text style={styles.timeText}>
-        {loading ? <ActivityIndicator size="large"/> : arrivalNext}</Text>
+        {loading ? <ActivityIndicator size="large" /> : arrival}
+      </Text>
+      <Text style={styles.timeText2}>
+        {loading ? <ActivityIndicator size="large" /> : duration}
+      </Text>
+      <Text style={styles.headerText}>Next Bus Arrival Time:</Text>
+      <Text style={styles.timeText}>
+        {loading ? <ActivityIndicator size="large" /> : arrivalNext}
+      </Text>
       <TouchableOpacity onPress={loadBusStopData} style={styles.button}>
         <Text styles={styles.buttonText}>Refresh</Text>
-      </TouchableOpacity>      
+      </TouchableOpacity>
     </View>
   );
 }
@@ -77,38 +82,38 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   headerText: {
     marginBottom: 20,
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333333'
+    fontWeight: "bold",
+    color: "#333333",
   },
   timeText: {
     marginBottom: 10,
-    alignContent: 'center',
+    alignContent: "center",
     fontSize: 48,
-    color: '#333333'
+    color: "#333333",
   },
   timeText2: {
     marginBottom: 20,
-    alignContent: 'center',
+    alignContent: "center",
     fontSize: 20,
-    color: '#333333'
+    color: "#333333",
   },
   button: {
     marginBottom: 20,
     borderRadius: 6,
-    backgroundColor: '#f4f421',
+    backgroundColor: "#f4f421",
     paddingVertical: 10,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   buttonText: {
     fontSize: 20,
-    color: '#fffafa',
-    padding: 20
-  }
+    color: "#fffafa",
+    padding: 20,
+  },
 });
