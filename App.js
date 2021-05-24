@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import moment from 'moment'
 
 export default function App() {
   const [loading, setLoading] = useState(true)
   const BUSSTOP_URL = "https://arrivelah2.busrouter.sg/?id=85041";
   const [arrival, setArrival] = useState("")
   const [arrivalNext, setArrivalNext] = useState("")
+  const [duration, setDuration] = useState("")
 
 
   function loadBusStopData() {
@@ -23,29 +23,35 @@ export default function App() {
       const myBus = responseData.services.filter(
         (item) => item.no === "10"
       )[0];
+      console.log(myBus);
 
-      if (myBus.next.time != []) {
-        let localTime = new Date(myBus.next.time).toLocaleTimeString(
+      let localTime = new Date(myBus.next.time).toLocaleTimeString(
           "en-US"
         );
-        setArrival(localTime);
+        setArrival(localTime)
 
-        /*let timeDiff = moment(myBus.next).diff(moment(), 'minutes');
-        if (isNaN(timeDiff)) {
-          timeDiff = 0;
-        }*/
-      }
+        const diffTime = Math.floor(myBus.next["duration_ms"] / 1000);
+        const mins = Math.floor(diffTime / 60);
+        const secs = diffTime % 60;
+        
+        if (diffTime < 0) {
+          setDuration(`Bus has arrived`);
+        } else {
+          setDuration(`In ${mins} mins : ${secs} secs`);
+        }
+      
+      let localTime2 = new Date(myBus.subsequent.time).toLocaleTimeString(
+          "en-US"
+        );
+        setArrivalNext(localTime2)
 
-      console.log("My Bus:");
-      console.log(myBus);
-      setArrival(myBus.next.time)
-      setArrivalNext(myBus.next2.time)
       setLoading(false)
-    })
-  };
+    });
+  }
 
   useEffect(() => {
-    const interval = setInterval(loadBusStopData, 15000);
+    const interval = setInterval(loadBusStopData, 60000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -58,10 +64,12 @@ export default function App() {
       <Text style={styles.headerText}>Bus Arrival Time:</Text>
       <Text style={styles.timeText}>
         {loading ? <ActivityIndicator size="large"/> : arrival}</Text>
+        <Text style={styles.timeText2}>
+        {loading ? <ActivityIndicator size="large"/> : duration}</Text> 
         <Text style={styles.headerText}>Next Bus Arrival Time:</Text>
         <Text style={styles.timeText}>
         {loading ? <ActivityIndicator size="large"/> : arrivalNext}</Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={loadBusStopData} style={styles.button}>
         <Text styles={styles.buttonText}>Refresh</Text>
       </TouchableOpacity>      
     </View>
@@ -82,9 +90,15 @@ const styles = StyleSheet.create({
     color: '#333333'
   },
   timeText: {
-    marginBottom: 20,
+    marginBottom: 10,
     alignContent: 'center',
     fontSize: 48,
+    color: '#333333'
+  },
+  timeText2: {
+    marginBottom: 20,
+    alignContent: 'center',
+    fontSize: 20,
     color: '#333333'
   },
   button: {
