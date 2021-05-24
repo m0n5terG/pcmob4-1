@@ -34,12 +34,11 @@ export default function App() {
 
         const diffTime = Math.floor(myBus.next["duration_ms"] / 1000);
         const mins = Math.floor(diffTime / 60);
-        const secs = diffTime % 60;
 
         if (diffTime < 0) {
           setDuration(`Bus has arrived`);
         } else {
-          setDuration(`In ${mins} mins : ${secs} secs`);
+          setDuration(`Bus arriving in ${mins} minutes`);
         }
 
         let localTime2 = new Date(myBus.subsequent.time).toLocaleTimeString(
@@ -113,7 +112,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    color: "#fffafa",
     padding: 20,
   },
 });
