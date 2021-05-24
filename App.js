@@ -52,12 +52,10 @@ export default function App() {
   useEffect(() => {
     const interval = setInterval(loadBusStopData, 60000);
 
+    loadBusStopData();
+
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    loadBusStopData();
-  }), [];
 
   return (
     <View style={styles.container}>
