@@ -60,7 +60,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Bus Arrival Time:</Text>
+      <Text style={styles.headerText}>Bus #10 Arrival Time:</Text>
       <Text style={styles.timeText}>
         {loading ? <ActivityIndicator size="large" /> : arrival}
       </Text>
